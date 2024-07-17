@@ -1,12 +1,18 @@
 import { useForm } from 'react-hook-form'
 import Error from './Error'
+import { DraftPatient } from '../types'
+import { usePatientStore } from '../store'
 
 const PatientForm = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { addPatient } = usePatientStore()
 
-    const registerPatient = () => {
-        console.log('Nuevo Paciente')
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<DraftPatient>()
+
+    const registerPatient = (data: DraftPatient) => {
+        addPatient(data)
+
+        reset()
     }
     return (
         <div className="md:w-1/2 lg:w-2/5 mx-5">
@@ -34,7 +40,7 @@ const PatientForm = () => {
                         })}
                     />
                     {errors.name && (
-                        <Error>{errors.name?.message?.toString()}</Error>
+                        <Error>{errors.name?.message}</Error>
                     )}
                 </div>
                 <div className="mb-5">
@@ -51,7 +57,7 @@ const PatientForm = () => {
                         })}
                     />
                     {errors.caretaker && (
-                        <Error>{errors.caretaker?.message?.toString()}</Error>
+                        <Error>{errors.caretaker?.message}</Error>
                     )}
                 </div>
                 <div className="mb-5">
@@ -72,7 +78,7 @@ const PatientForm = () => {
                         })}
                     />
                     {errors.email && (
-                        <Error>{errors.email?.message?.toString()}</Error>
+                        <Error>{errors.email?.message}</Error>
                     )}
                 </div>
                 <div className="mb-5">
@@ -88,7 +94,7 @@ const PatientForm = () => {
                         })}
                     />
                     {errors.date && (
-                        <Error>{errors.date?.message?.toString()}</Error>
+                        <Error>{errors.date?.message}</Error>
                     )}
                 </div>
                 <div className="mb-5">
@@ -104,7 +110,7 @@ const PatientForm = () => {
                         })}
                     />
                     {errors.symptoms && (
-                        <Error>{errors.symptoms?.message?.toString()}</Error>
+                        <Error>{errors.symptoms?.message}</Error>
                     )}
                 </div>
                 <input
